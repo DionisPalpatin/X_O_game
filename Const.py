@@ -12,6 +12,7 @@ class Const():
             [4, 5, 6],
             [7, 8, 9]
             ]
+        self.flag = True
 
 
     def change(self, i, j, letter):
@@ -25,6 +26,7 @@ class Const():
                         (self.step * i + self.step // 2, 0), 
                         (self.step * i + self.step // 2, self.size), 10
                         )
+            self.flag = False
 
 
         elif self.matrix[0][j] == self.matrix[1][j] == self.matrix[2][j]:
@@ -33,6 +35,7 @@ class Const():
                         (0, self.step * j + self.step // 2), 
                         (self.size, self.step * j + self.step // 2), 10
                         )
+            self.flag = False
 
 
         elif self.matrix[0][0] == self.matrix[1][1] == self.matrix[2][2]:
@@ -40,6 +43,7 @@ class Const():
                         self.screen, (255, 0, 0),
                         (0, 0), (self.size, self.size), 10
                         )
+            self.flag = False
 
 
         elif self.matrix[0][2] == self.matrix[1][1] == self.matrix[2][0]:
@@ -47,6 +51,7 @@ class Const():
                         self.screen, (255, 0, 0),
                         (0, self.size), (self.size, 0), 10
                         )
+            self.flag = False
 
 
     def drowing_field(self):

@@ -17,6 +17,6 @@ while True:
             exit()
 
 
-        elif event.type == pg.MOUSEBUTTONDOWN:
+        elif event.type == pg.MOUSEBUTTONDOWN and figure.flag:
             figure.game_process()
             pg.display.update()
