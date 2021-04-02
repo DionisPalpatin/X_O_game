@@ -58,7 +58,7 @@ class Field():
         self.y = self.step * (self.y // self.step)
         self.flag_for_work = False
         
-
+        
         if self.what_to_draw == "x":
             pg.draw.line(main_game, 
                         (0, 0, 0), 
@@ -122,8 +122,8 @@ class Field():
         if check_column(self.matrix, self.x, self.quantity):
             pg.draw.line(
                         main_game, (255, 0, 0), 
-                        (self.step * self.x + self.step // 2, 0), 
-                        (self.step * self.x + self.step // 2, size_main_game[0]), 10
+                        (self.step * self.x + self.space + self.step // 2, 0), 
+                        (self.step * self.x + self.space + self.step // 2, size_main_game[0]), 10
                         )
             self.show_must_go_on = False
             self.creat_matrix()
@@ -145,7 +145,7 @@ class Field():
         elif check_sec_diag(self.matrix, self.quantity):
             pg.draw.line(
                         main_game, (255, 0, 0),
-                        (0, size_main_game[1]), (size_main_game, 0), 10
+                        (self.space, size_main_game[1]), (size_main_game[0], 0), 10
                         )
             self.show_must_go_on = False
             self.creat_matrix()
@@ -155,40 +155,42 @@ class Button():
     global start_menu, size_start_menu, quantity_of_buttons, step, main_game, size_main_game
 
 
-    def __init__(self, text, sizes):
+    def __init__(self, text, sizes, on_what_screen):
         self.name = text
+        self.screen = on_what_screen
         self.size_x, self.size_y = sizes
-        self.centerX = (size_start_menu[0] - self.size_x) // 2 + self.size_x // 2
+        self.centerX = 0 
         self.centerY = 0
         self.increase = False
+
+
+    def white(self):
+        pg.draw.rect(
+                    self.screen, (255, 255, 255),
+                    (self.centerX - self.size_x // 2 - 3, self.centerY - self.size_y // 2 - 3, self.size_x + 6, self.size_y + 6)
+                    )
         
         
     def creat_button(self):
         pg.draw.rect(
-                    start_menu, (0, 0, 0), 
+                    self.screen, (0, 0, 0), 
                     (self.centerX - self.size_x // 2, self.centerY - self.size_y // 2, self.size_x, self.size_y), 5
                     )
         pixels = self.size_y - 2 * 10
         font = pg.font.SysFont(None, pixels)
         text = font.render(self.name, True, (0, 0, 0))
         text_rect = text.get_rect(center=(self.centerX, self.centerY))
-        start_menu.blit(text, text_rect)
+        self.screen.blit(text, text_rect)
 
 
     def increase_sizes(self):
-        pg.draw.rect(
-                    start_menu, (255, 255, 255),
-                    (self.centerX - self.size_x // 2 - 2, self.centerY - self.size_y // 2 - 2, self.size_x + 6, self.size_y + 6)
-                    )
+        self.white()
         self.size_y = round(self.size_y * 1.1)
         self.size_x = round(self.size_x * 1.1)
 
 
     def decrease_sizes(self):
-        pg.draw.rect(
-                    start_menu, (255, 255, 255),
-                    (self.centerX - self.size_x // 2 - 2, self.centerY - self.size_y // 2 - 2, self.size_x + 6, self.size_y + 6)
-                    )
+        self.white()
         self.size_x = round(self.size_x * 0.90909090)
         self.size_y = round(self.size_y * 0.90909090)
 
@@ -204,24 +206,27 @@ class Button():
             return False
 
 
-
-
 field = Field()
 
 
 sizes = (200, 100)
-start_button = Button("start", sizes)
+start_button = Button("start", sizes, start_menu)
+start_button.centerX = size_start_menu[0] // 2
 all_buttons.append(sizes[1])
 
 
-sizes = (200, 100)
-exit_button = Button("exit", sizes)
-all_buttons. append(sizes[1])
+exit_button = Button("exit", sizes, start_menu)
+exit_button.centerX = size_start_menu[0] // 2
+all_buttons.append(sizes[1])
+
+
+sizes = (150, 75)
+whose_turn = Button("X", sizes, main_game)
+whose_turn.centerX = (size_main_game[0] - size_main_game[1]) // 2
+whose_turn.centerY = size_main_game[1] // 2
 
 
 step = (size_start_menu[1] - sum(all_buttons)) // (quantity_of_buttons + 1)
-
-
 start_button.centerY = step + start_button.size_y // 2
 exit_button.centerY = step * 2 + start_button.size_y + exit_button.size_y // 2
 
