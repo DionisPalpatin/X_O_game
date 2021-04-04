@@ -2,7 +2,8 @@ import pygame as pg
 import Classes
 
 
-pg.init()
+532wy54rdu65edu5ted
+pg.init()czdbgfgjk;lkjgfkl;kjgfdghjkljduyfjyt
 Classes.start_menu.fill((255, 255, 255))
 Classes.field.creat_matrix()
 
